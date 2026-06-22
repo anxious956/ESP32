@@ -1,0 +1,4 @@
+numpy
+scipy
+matplotlib
+# tensorflow added in Phase 2 (training + int8 quantization to TFLite Micro)
