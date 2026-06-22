@@ -70,6 +70,26 @@ def fit_temperature_per_snr(logits: np.ndarray, labels: np.ndarray,
     return snr_levels, np.asarray(temps, dtype=np.float64)
 
 
+def isotonic_decreasing(y: np.ndarray) -> np.ndarray:
+    """Project onto non-increasing sequences (pool-adjacent-violators).
+
+    Temperatures should not increase with SNR (higher SNR -> less over-confident
+    -> smaller T). Enforcing this removes noisy non-monotonic per-bucket fits so
+    the curve generalizes from validation to test.
+    """
+    vals, wts = [], []
+    for v in map(float, y):
+        vals.append(v); wts.append(1.0)
+        while len(vals) > 1 and vals[-2] < vals[-1]:   # violation of non-increasing
+            v2, w2 = vals.pop(), wts.pop()
+            v1, w1 = vals.pop(), wts.pop()
+            vals.append((v1 * w1 + v2 * w2) / (w1 + w2)); wts.append(w1 + w2)
+    out = []
+    for v, w in zip(vals, wts):
+        out.extend([v] * int(round(w)))
+    return np.asarray(out, dtype=np.float64)
+
+
 def apply_per_snr_temperature(logits: np.ndarray, snrs: np.ndarray,
                               levels: np.ndarray, temps: np.ndarray) -> np.ndarray:
     """Apply T(SNR) per sample (linear interpolation, clamped at the ends).
