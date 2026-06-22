@@ -122,4 +122,5 @@ Blue pot on the sensor board = analog gain; tune after the first run.
 quantize + fit `T(SNR)` · `Phase 3` on-device inference + SNR estimator + calibration ·
 `Phase 4` SNR-vs-ECE evaluation · `Phase 5` AWS dashboard.
 
-**Status: Phase 0.**
+**Status: Phase 1** (capture firmware + logger ready; ML calibration core proven on
+synthetic data — waiting on a USB **data** cable to collect real audio).

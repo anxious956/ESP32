@@ -1,0 +1,15 @@
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# ML demo outputs (regenerate with: python ml/demo_calibration.py)
+ml/outputs/
+
+# PlatformIO
+.pio/
+.vscode/
+
+# Phase 1 captured data (large; regenerate by recording)
+data/*.csv
