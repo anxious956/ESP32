@@ -10,3 +10,6 @@ ml/outputs/
 # PlatformIO
 .pio/
 .vscode/
+
+# Phase 1 captured data (large; regenerate by recording)
+data/*.csv
